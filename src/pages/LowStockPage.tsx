@@ -1,22 +1,65 @@
-import { Box, Card, CardContent, LinearProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { useState } from 'react';
+import {
+  Box,
+  Card,
+  CardContent,
+  Chip,
+  InputAdornment,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  TextField,
+  Typography,
+} from '@mui/material';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import SearchIcon from '@mui/icons-material/Search';
+import { mockProducts } from '../mock/mockProducts';
 
-const MOCK_LOW_STOCK = [
-  { id: 1, name: 'USB-C Hub', sku: 'UH-003', category: 'Accessories', stock: 3, minStock: 10 },
-  { id: 2, name: 'Webcam HD', sku: 'WC-005', category: 'Electronics', stock: 0, minStock: 5 },
-  { id: 3, name: 'Mechanical Keyboard', sku: 'MK-002', category: 'Electronics', stock: 4, minStock: 15 },
-  { id: 4, name: 'Ethernet Cable 5m', sku: 'EC-010', category: 'Networking', stock: 2, minStock: 20 },
-];
+function statusChip(stock: number) {
+  if (stock === 0) return <Chip label="Out of Stock" color="error" size="small" />;
+  return <Chip label="Low Stock" color="warning" size="small" />;
+}
 
 export default function LowStockPage() {
+  const [search, setSearch] = useState('');
+
+  const lowStockProducts = mockProducts.filter((p) => p.stock <= p.reorderLevel);
+
+  const filtered = lowStockProducts.filter((p) => {
+    const q = search.toLowerCase();
+    return p.sku.toLowerCase().includes(q) || p.name.toLowerCase().includes(q);
+  });
+
   return (
     <Box>
-      <Box display="flex" alignItems="center" gap={1} mb={3}>
+      <Box display="flex" alignItems="center" gap={1} mb={1}>
         <WarningAmberIcon color="warning" />
         <Typography variant="h5" fontWeight={700}>
           Low Stock Alerts
         </Typography>
       </Box>
+
+      <Typography variant="body2" color="text.secondary" mb={3}>
+        {lowStockProducts.length} product{lowStockProducts.length !== 1 ? 's' : ''} at or below reorder level
+      </Typography>
+
+      <TextField
+        size="small"
+        placeholder="Search by SKU or product name…"
+        value={search}
+        onChange={(e) => setSearch(e.target.value)}
+        InputProps={{
+          startAdornment: (
+            <InputAdornment position="start">
+              <SearchIcon fontSize="small" />
+            </InputAdornment>
+          ),
+        }}
+        sx={{ mb: 2, width: 320 }}
+      />
 
       <Card elevation={2}>
         <CardContent sx={{ p: 0, '&:last-child': { pb: 0 } }}>
@@ -24,37 +67,44 @@ export default function LowStockPage() {
             <Table>
               <TableHead>
                 <TableRow sx={{ bgcolor: 'grey.50' }}>
-                  <TableCell><strong>Product</strong></TableCell>
                   <TableCell><strong>SKU</strong></TableCell>
+                  <TableCell><strong>Product Name</strong></TableCell>
                   <TableCell><strong>Category</strong></TableCell>
+                  <TableCell><strong>Supplier</strong></TableCell>
                   <TableCell align="right"><strong>Current Stock</strong></TableCell>
-                  <TableCell align="right"><strong>Min Stock</strong></TableCell>
-                  <TableCell sx={{ minWidth: 150 }}><strong>Stock Level</strong></TableCell>
+                  <TableCell align="right"><strong>Reorder Level</strong></TableCell>
+                  <TableCell align="center"><strong>Status</strong></TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
-                {MOCK_LOW_STOCK.map((item) => {
-                  const pct = Math.min((item.stock / item.minStock) * 100, 100);
-                  return (
-                    <TableRow key={item.id} hover>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell sx={{ color: 'text.secondary', fontFamily: 'monospace' }}>{item.sku}</TableCell>
+                {filtered.length === 0 ? (
+                  <TableRow>
+                    <TableCell colSpan={7} align="center" sx={{ py: 4, color: 'text.secondary' }}>
+                      No products match your search.
+                    </TableCell>
+                  </TableRow>
+                ) : (
+                  filtered.map((item) => (
+                    <TableRow
+                      key={item.id}
+                      hover
+                      sx={item.stock === 0 ? { bgcolor: 'error.50' } : undefined}
+                    >
+                      <TableCell sx={{ fontFamily: 'monospace', color: 'text.secondary' }}>{item.sku}</TableCell>
+                      <TableCell sx={item.stock === 0 ? { fontWeight: 700 } : undefined}>{item.name}</TableCell>
                       <TableCell>{item.category}</TableCell>
-                      <TableCell align="right" sx={{ color: item.stock === 0 ? 'error.main' : 'warning.main', fontWeight: 700 }}>
+                      <TableCell>{item.supplier}</TableCell>
+                      <TableCell
+                        align="right"
+                        sx={{ fontWeight: 700, color: item.stock === 0 ? 'error.main' : 'warning.main' }}
+                      >
                         {item.stock}
                       </TableCell>
-                      <TableCell align="right">{item.minStock}</TableCell>
-                      <TableCell>
-                        <LinearProgress
-                          variant="determinate"
-                          value={pct}
-                          color={item.stock === 0 ? 'error' : 'warning'}
-                          sx={{ height: 8, borderRadius: 4 }}
-                        />
-                      </TableCell>
+                      <TableCell align="right">{item.reorderLevel}</TableCell>
+                      <TableCell align="center">{statusChip(item.stock)}</TableCell>
                     </TableRow>
-                  );
-                })}
+                  ))
+                )}
               </TableBody>
             </Table>
           </TableContainer>
