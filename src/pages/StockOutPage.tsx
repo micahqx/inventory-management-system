@@ -103,7 +103,7 @@ export default function StockOutPage() {
     if (!validate()) return;
 
     const newRecord: InventoryMovement = {
-      id: movements.length + 1,
+      id: Math.max(...movements.map((m) => m.id), 0) + 1,
       date: form.date,
       product: selectedProduct!.name,
       type: 'stock_out',
