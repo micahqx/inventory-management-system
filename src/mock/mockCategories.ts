@@ -1,0 +1,88 @@
+import type { Category } from '../types/inventory';
+
+export const mockCategories: Category[] = [
+  {
+    id: 1,
+    name: 'Electronics',
+    description: 'Electronic devices, gadgets, and accessories',
+    product_count: 42,
+    created_at: '2025-01-05T08:00:00Z',
+  },
+  {
+    id: 2,
+    name: 'Office Supplies',
+    description: 'Stationery, paper products, and office consumables',
+    product_count: 35,
+    created_at: '2025-01-05T08:05:00Z',
+  },
+  {
+    id: 3,
+    name: 'Furniture',
+    description: 'Office and home furniture including desks and chairs',
+    product_count: 18,
+    created_at: '2025-01-05T08:10:00Z',
+  },
+  {
+    id: 4,
+    name: 'Grocery',
+    description: 'Food items, beverages, and pantry essentials',
+    product_count: 60,
+    created_at: '2025-01-05T08:15:00Z',
+  },
+  {
+    id: 5,
+    name: 'Hardware',
+    description: 'Tools, fasteners, and building materials',
+    product_count: 27,
+    created_at: '2025-01-05T08:20:00Z',
+  },
+  {
+    id: 6,
+    name: 'Networking',
+    description: 'Network equipment, cables, and wireless devices',
+    product_count: 14,
+    created_at: '2025-01-06T08:00:00Z',
+  },
+  {
+    id: 7,
+    name: 'Peripherals',
+    description: 'Computer peripherals such as keyboards, mice, and monitors',
+    product_count: 31,
+    created_at: '2025-01-06T08:05:00Z',
+  },
+  {
+    id: 8,
+    name: 'Cleaning Supplies',
+    description: 'Cleaning agents, mops, brushes, and sanitation products',
+    product_count: 22,
+    created_at: '2025-01-06T08:10:00Z',
+  },
+  {
+    id: 9,
+    name: 'Safety & Security',
+    description: 'Personal protective equipment, locks, and surveillance gear',
+    product_count: 11,
+    created_at: '2025-01-06T08:15:00Z',
+  },
+  {
+    id: 10,
+    name: 'Packaging Materials',
+    description: 'Boxes, tape, bubble wrap, and shipping supplies',
+    product_count: 16,
+    created_at: '2025-01-06T08:20:00Z',
+  },
+  {
+    id: 11,
+    name: 'Lighting',
+    description: 'Light bulbs, fixtures, and electrical accessories',
+    product_count: 9,
+    created_at: '2025-01-07T08:00:00Z',
+  },
+  {
+    id: 12,
+    name: 'Medical Supplies',
+    description: 'First aid kits, bandages, and basic medical equipment',
+    product_count: 13,
+    created_at: '2025-01-07T08:05:00Z',
+  },
+];
