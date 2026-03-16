@@ -3,6 +3,7 @@ import BarChartIcon from '@mui/icons-material/BarChart';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import TrendingDownIcon from '@mui/icons-material/TrendingDown';
 import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
+import PageHeader from '../components/PageHeader';
 
 interface ReportCardProps {
   title: string;
@@ -40,12 +41,7 @@ function ReportCard({ title, value, subtitle, icon, color }: ReportCardProps) {
 export default function ReportsPage() {
   return (
     <Box>
-      <Box display="flex" alignItems="center" gap={1} mb={3}>
-        <BarChartIcon color="primary" />
-        <Typography variant="h5" fontWeight={700}>
-          Reports
-        </Typography>
-      </Box>
+      <PageHeader title="Reports" icon={<BarChartIcon color="primary" />} />
 
       <Grid container spacing={3} mb={4}>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>

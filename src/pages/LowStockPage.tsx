@@ -1,5 +1,7 @@
-import { Box, Card, CardContent, LinearProgress, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, LinearProgress, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import PageHeader from '../components/PageHeader';
+import TableCard from '../components/TableCard';
 
 const MOCK_LOW_STOCK = [
   { id: 1, name: 'USB-C Hub', sku: 'UH-003', category: 'Accessories', stock: 3, minStock: 10 },
@@ -11,55 +13,46 @@ const MOCK_LOW_STOCK = [
 export default function LowStockPage() {
   return (
     <Box>
-      <Box display="flex" alignItems="center" gap={1} mb={3}>
-        <WarningAmberIcon color="warning" />
-        <Typography variant="h5" fontWeight={700}>
-          Low Stock Alerts
-        </Typography>
-      </Box>
+      <PageHeader title="Low Stock Alerts" icon={<WarningAmberIcon color="warning" />} />
 
-      <Card elevation={2}>
-        <CardContent sx={{ p: 0, '&:last-child': { pb: 0 } }}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow sx={{ bgcolor: 'grey.50' }}>
-                  <TableCell><strong>Product</strong></TableCell>
-                  <TableCell><strong>SKU</strong></TableCell>
-                  <TableCell><strong>Category</strong></TableCell>
-                  <TableCell align="right"><strong>Current Stock</strong></TableCell>
-                  <TableCell align="right"><strong>Min Stock</strong></TableCell>
-                  <TableCell sx={{ minWidth: 150 }}><strong>Stock Level</strong></TableCell>
+      <TableCard>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ bgcolor: 'grey.50' }}>
+              <TableCell><strong>Product</strong></TableCell>
+              <TableCell><strong>SKU</strong></TableCell>
+              <TableCell><strong>Category</strong></TableCell>
+              <TableCell align="right"><strong>Current Stock</strong></TableCell>
+              <TableCell align="right"><strong>Min Stock</strong></TableCell>
+              <TableCell sx={{ minWidth: 150 }}><strong>Stock Level</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {MOCK_LOW_STOCK.map((item) => {
+              const pct = Math.min((item.stock / item.minStock) * 100, 100);
+              return (
+                <TableRow key={item.id} hover>
+                  <TableCell>{item.name}</TableCell>
+                  <TableCell sx={{ color: 'text.secondary', fontFamily: 'monospace' }}>{item.sku}</TableCell>
+                  <TableCell>{item.category}</TableCell>
+                  <TableCell align="right" sx={{ color: item.stock === 0 ? 'error.main' : 'warning.main', fontWeight: 700 }}>
+                    {item.stock}
+                  </TableCell>
+                  <TableCell align="right">{item.minStock}</TableCell>
+                  <TableCell>
+                    <LinearProgress
+                      variant="determinate"
+                      value={pct}
+                      color={item.stock === 0 ? 'error' : 'warning'}
+                      sx={{ height: 8, borderRadius: 4 }}
+                    />
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {MOCK_LOW_STOCK.map((item) => {
-                  const pct = Math.min((item.stock / item.minStock) * 100, 100);
-                  return (
-                    <TableRow key={item.id} hover>
-                      <TableCell>{item.name}</TableCell>
-                      <TableCell sx={{ color: 'text.secondary', fontFamily: 'monospace' }}>{item.sku}</TableCell>
-                      <TableCell>{item.category}</TableCell>
-                      <TableCell align="right" sx={{ color: item.stock === 0 ? 'error.main' : 'warning.main', fontWeight: 700 }}>
-                        {item.stock}
-                      </TableCell>
-                      <TableCell align="right">{item.minStock}</TableCell>
-                      <TableCell>
-                        <LinearProgress
-                          variant="determinate"
-                          value={pct}
-                          color={item.stock === 0 ? 'error' : 'warning'}
-                          sx={{ height: 8, borderRadius: 4 }}
-                        />
-                      </TableCell>
-                    </TableRow>
-                  );
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </CardContent>
-      </Card>
+              );
+            })}
+          </TableBody>
+        </Table>
+      </TableCard>
     </Box>
   );
 }

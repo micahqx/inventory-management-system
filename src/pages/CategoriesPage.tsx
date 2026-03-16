@@ -1,5 +1,7 @@
-import { Box, Button, Card, CardContent, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import PageHeader from '../components/PageHeader';
+import TableCard from '../components/TableCard';
 
 const MOCK_CATEGORIES = [
   { id: 1, name: 'Electronics', description: 'Electronic devices and accessories', productCount: 42 },
@@ -12,39 +14,35 @@ const MOCK_CATEGORIES = [
 export default function CategoriesPage() {
   return (
     <Box>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-        <Typography variant="h5" fontWeight={700}>
-          Categories
-        </Typography>
-        <Button variant="contained" startIcon={<AddIcon />}>
-          Add Category
-        </Button>
-      </Box>
+      <PageHeader
+        title="Categories"
+        action={
+          <Button variant="contained" startIcon={<AddIcon />}>
+            Add Category
+          </Button>
+        }
+      />
 
-      <Card elevation={2}>
-        <CardContent sx={{ p: 0, '&:last-child': { pb: 0 } }}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow sx={{ bgcolor: 'grey.50' }}>
-                  <TableCell><strong>Name</strong></TableCell>
-                  <TableCell><strong>Description</strong></TableCell>
-                  <TableCell align="right"><strong>Products</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {MOCK_CATEGORIES.map((c) => (
-                  <TableRow key={c.id} hover>
-                    <TableCell>{c.name}</TableCell>
-                    <TableCell sx={{ color: 'text.secondary' }}>{c.description}</TableCell>
-                    <TableCell align="right">{c.productCount}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </CardContent>
-      </Card>
+      <TableCard>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ bgcolor: 'grey.50' }}>
+              <TableCell><strong>Name</strong></TableCell>
+              <TableCell><strong>Description</strong></TableCell>
+              <TableCell align="right"><strong>Products</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {MOCK_CATEGORIES.map((c) => (
+              <TableRow key={c.id} hover>
+                <TableCell>{c.name}</TableCell>
+                <TableCell sx={{ color: 'text.secondary' }}>{c.description}</TableCell>
+                <TableCell align="right">{c.productCount}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableCard>
     </Box>
   );
 }

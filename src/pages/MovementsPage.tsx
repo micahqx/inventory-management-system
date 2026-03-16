@@ -1,4 +1,7 @@
-import { Box, Card, CardContent, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
+import PageHeader from '../components/PageHeader';
+import TableCard from '../components/TableCard';
+import StatusChip from '../components/StatusChip';
 
 const MOCK_MOVEMENTS = [
   { id: 1, date: '2026-03-15', product: 'Wireless Mouse', type: 'IN', quantity: 50, balance: 95 },
@@ -12,44 +15,34 @@ const MOCK_MOVEMENTS = [
 export default function MovementsPage() {
   return (
     <Box>
-      <Typography variant="h5" fontWeight={700} mb={3}>
-        Inventory Movements
-      </Typography>
+      <PageHeader title="Inventory Movements" />
 
-      <Card elevation={2}>
-        <CardContent sx={{ p: 0, '&:last-child': { pb: 0 } }}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow sx={{ bgcolor: 'grey.50' }}>
-                  <TableCell><strong>Date</strong></TableCell>
-                  <TableCell><strong>Product</strong></TableCell>
-                  <TableCell align="center"><strong>Type</strong></TableCell>
-                  <TableCell align="right"><strong>Quantity</strong></TableCell>
-                  <TableCell align="right"><strong>Balance After</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {MOCK_MOVEMENTS.map((m) => (
-                  <TableRow key={m.id} hover>
-                    <TableCell>{m.date}</TableCell>
-                    <TableCell>{m.product}</TableCell>
-                    <TableCell align="center">
-                      <Chip
-                        label={m.type}
-                        color={m.type === 'IN' ? 'success' : 'error'}
-                        size="small"
-                      />
-                    </TableCell>
-                    <TableCell align="right">{m.quantity}</TableCell>
-                    <TableCell align="right">{m.balance}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </CardContent>
-      </Card>
+      <TableCard>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ bgcolor: 'grey.50' }}>
+              <TableCell><strong>Date</strong></TableCell>
+              <TableCell><strong>Product</strong></TableCell>
+              <TableCell align="center"><strong>Type</strong></TableCell>
+              <TableCell align="right"><strong>Quantity</strong></TableCell>
+              <TableCell align="right"><strong>Balance After</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {MOCK_MOVEMENTS.map((m) => (
+              <TableRow key={m.id} hover>
+                <TableCell>{m.date}</TableCell>
+                <TableCell>{m.product}</TableCell>
+                <TableCell align="center">
+                  <StatusChip label={m.type} color={m.type === 'IN' ? 'success' : 'error'} />
+                </TableCell>
+                <TableCell align="right">{m.quantity}</TableCell>
+                <TableCell align="right">{m.balance}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableCard>
     </Box>
   );
 }

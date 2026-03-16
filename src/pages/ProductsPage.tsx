@@ -1,5 +1,8 @@
-import { Box, Button, Card, CardContent, Chip, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
+import { Box, Button, Table, TableBody, TableCell, TableHead, TableRow } from '@mui/material';
 import AddIcon from '@mui/icons-material/Add';
+import PageHeader from '../components/PageHeader';
+import TableCard from '../components/TableCard';
+import StockStatusChip from '../components/StockStatusChip';
 
 const MOCK_PRODUCTS = [
   { id: 1, name: 'Wireless Mouse', category: 'Electronics', sku: 'WM-001', price: 29.99, stock: 45 },
@@ -9,54 +12,44 @@ const MOCK_PRODUCTS = [
   { id: 5, name: 'Webcam HD', category: 'Electronics', sku: 'WC-005', price: 59.99, stock: 0 },
 ];
 
-function stockChip(stock: number) {
-  if (stock === 0) return <Chip label="Out of Stock" color="error" size="small" />;
-  if (stock <= 5) return <Chip label="Low Stock" color="warning" size="small" />;
-  return <Chip label="In Stock" color="success" size="small" />;
-}
-
 export default function ProductsPage() {
   return (
     <Box>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mb={3}>
-        <Typography variant="h5" fontWeight={700}>
-          Products
-        </Typography>
-        <Button variant="contained" startIcon={<AddIcon />}>
-          Add Product
-        </Button>
-      </Box>
+      <PageHeader
+        title="Products"
+        action={
+          <Button variant="contained" startIcon={<AddIcon />}>
+            Add Product
+          </Button>
+        }
+      />
 
-      <Card elevation={2}>
-        <CardContent sx={{ p: 0, '&:last-child': { pb: 0 } }}>
-          <TableContainer>
-            <Table>
-              <TableHead>
-                <TableRow sx={{ bgcolor: 'grey.50' }}>
-                  <TableCell><strong>Name</strong></TableCell>
-                  <TableCell><strong>SKU</strong></TableCell>
-                  <TableCell><strong>Category</strong></TableCell>
-                  <TableCell align="right"><strong>Price</strong></TableCell>
-                  <TableCell align="right"><strong>Stock</strong></TableCell>
-                  <TableCell align="center"><strong>Status</strong></TableCell>
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {MOCK_PRODUCTS.map((p) => (
-                  <TableRow key={p.id} hover>
-                    <TableCell>{p.name}</TableCell>
-                    <TableCell sx={{ color: 'text.secondary', fontFamily: 'monospace' }}>{p.sku}</TableCell>
-                    <TableCell>{p.category}</TableCell>
-                    <TableCell align="right">${p.price.toFixed(2)}</TableCell>
-                    <TableCell align="right">{p.stock}</TableCell>
-                    <TableCell align="center">{stockChip(p.stock)}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </CardContent>
-      </Card>
+      <TableCard>
+        <Table>
+          <TableHead>
+            <TableRow sx={{ bgcolor: 'grey.50' }}>
+              <TableCell><strong>Name</strong></TableCell>
+              <TableCell><strong>SKU</strong></TableCell>
+              <TableCell><strong>Category</strong></TableCell>
+              <TableCell align="right"><strong>Price</strong></TableCell>
+              <TableCell align="right"><strong>Stock</strong></TableCell>
+              <TableCell align="center"><strong>Status</strong></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {MOCK_PRODUCTS.map((p) => (
+              <TableRow key={p.id} hover>
+                <TableCell>{p.name}</TableCell>
+                <TableCell sx={{ color: 'text.secondary', fontFamily: 'monospace' }}>{p.sku}</TableCell>
+                <TableCell>{p.category}</TableCell>
+                <TableCell align="right">${p.price.toFixed(2)}</TableCell>
+                <TableCell align="right">{p.stock}</TableCell>
+                <TableCell align="center"><StockStatusChip stock={p.stock} /></TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableCard>
     </Box>
   );
 }

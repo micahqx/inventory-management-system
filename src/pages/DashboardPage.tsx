@@ -3,6 +3,7 @@ import InventoryIcon from '@mui/icons-material/Inventory';
 import CategoryIcon from '@mui/icons-material/Category';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
 import WarningAmberIcon from '@mui/icons-material/WarningAmber';
+import PageHeader from '../components/PageHeader';
 
 interface StatCardProps {
   title: string;
@@ -46,9 +47,7 @@ function StatCard({ title, value, icon, color }: StatCardProps) {
 export default function DashboardPage() {
   return (
     <Box>
-      <Typography variant="h5" fontWeight={700} mb={3}>
-        Dashboard
-      </Typography>
+      <PageHeader title="Dashboard" />
       <Grid container spacing={3}>
         <Grid size={{ xs: 12, sm: 6, md: 3 }}>
           <StatCard
