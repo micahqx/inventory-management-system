@@ -45,7 +45,7 @@ export const mockSuppliers: Supplier[] = [
     name: 'Stationery Plus',
     contact: 'Eva Martinez',
     phone: '+1-555-0105',
-    email: 'eva@stationaryplus.com',
+    email: 'eva@stationeryplus.com',
     address: '654 Paper Lane, Seattle, WA 98101',
   },
 ];

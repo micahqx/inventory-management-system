@@ -83,7 +83,8 @@ export default function SuppliersPage() {
     setSuppliers((prev) => prev.filter((s) => s.id !== id));
   }
 
-  const isFormValid = form.name.trim() !== '' && form.contact.trim() !== '';
+  const isEmailValid = form.email.trim() === '' || /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email.trim());
+  const isFormValid = form.name.trim() !== '' && form.contact.trim() !== '' && isEmailValid;
 
   return (
     <Box>
@@ -200,6 +201,8 @@ export default function SuppliersPage() {
               type="email"
               value={form.email}
               onChange={(e) => handleFormChange('email', e.target.value)}
+              error={form.email.trim() !== '' && !isEmailValid}
+              helperText={form.email.trim() !== '' && !isEmailValid ? 'Enter a valid email address.' : ''}
               fullWidth
             />
             <TextField
