@@ -62,7 +62,7 @@ function StatCard({ title, value, icon, color }: StatCardProps) {
 }
 
 export default function DashboardPage() {
-  const lowStockProducts = mockProducts.filter((p) => p.stock <= p.reorderLevel);
+  const lowStockProducts = mockProducts.filter((p) => p.currentStock <= p.reorderLevel);
   const recentMovements = [...mockInventoryMovements]
     .sort((a, b) => b.date.localeCompare(a.date))
     .slice(0, 5);
@@ -173,13 +173,13 @@ export default function DashboardPage() {
                     {lowStockProducts.map((product) => (
                       <TableRow key={product.id} hover>
                         <TableCell>{product.name}</TableCell>
-                        <TableCell align="right">{product.stock}</TableCell>
+                        <TableCell align="right">{product.currentStock}</TableCell>
                         <TableCell align="right">{product.reorderLevel}</TableCell>
                         <TableCell align="center">
                           <Chip
-                            label={product.stock === 0 ? 'Out of Stock' : 'Low Stock'}
+                            label={product.currentStock === 0 ? 'Out of Stock' : 'Low Stock'}
                             size="small"
-                            color={product.stock === 0 ? 'error' : 'warning'}
+                            color={product.currentStock === 0 ? 'error' : 'warning'}
                           />
                         </TableCell>
                       </TableRow>

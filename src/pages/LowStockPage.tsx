@@ -26,7 +26,7 @@ function statusChip(stock: number) {
 export default function LowStockPage() {
   const [search, setSearch] = useState('');
 
-  const lowStockProducts = mockProducts.filter((p) => p.stock <= p.reorderLevel);
+  const lowStockProducts = mockProducts.filter((p) => p.currentStock <= p.reorderLevel);
 
   const filtered = lowStockProducts.filter((p) => {
     const q = search.toLowerCase();
@@ -88,20 +88,20 @@ export default function LowStockPage() {
                     <TableRow
                       key={item.id}
                       hover
-                      sx={item.stock === 0 ? { bgcolor: 'error.50' } : undefined}
+                      sx={item.currentStock === 0 ? { bgcolor: 'error.50' } : undefined}
                     >
                       <TableCell sx={{ fontFamily: 'monospace', color: 'text.secondary' }}>{item.sku}</TableCell>
-                      <TableCell sx={item.stock === 0 ? { fontWeight: 700 } : undefined}>{item.name}</TableCell>
+                      <TableCell sx={item.currentStock === 0 ? { fontWeight: 700 } : undefined}>{item.name}</TableCell>
                       <TableCell>{item.category}</TableCell>
                       <TableCell>{item.supplier}</TableCell>
                       <TableCell
                         align="right"
-                        sx={{ fontWeight: 700, color: item.stock === 0 ? 'error.main' : 'warning.main' }}
+                        sx={{ fontWeight: 700, color: item.currentStock === 0 ? 'error.main' : 'warning.main' }}
                       >
-                        {item.stock}
+                        {item.currentStock}
                       </TableCell>
                       <TableCell align="right">{item.reorderLevel}</TableCell>
-                      <TableCell align="center">{statusChip(item.stock)}</TableCell>
+                      <TableCell align="center">{statusChip(item.currentStock)}</TableCell>
                     </TableRow>
                   ))
                 )}
